@@ -1,0 +1,51 @@
+using AutoMapper;
+using FluentValidation.Results;
+using Marketplace.Application.Models;
+using Marketplace.Application.Services.Interfaces;
+using Marketplace.Domain.Commands.UserCommands;
+using Marketplace.Domain.Repositories;
+using NetDevPack.Mediator;
+
+namespace Marketplace.Application.Services
+{
+    public class UserService : IUserService
+    {
+        private readonly IMapper mapper;
+        private readonly IUserRepository userRepository;
+        private readonly IMediatorHandler mediator;
+
+        public UserService(IMapper mapper, IUserRepository userRepository, IMediatorHandler mediator)
+        {
+            this.mapper = mapper;
+            this.userRepository = userRepository;
+            this.mediator = mediator;
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+        }
+
+        public async Task<List<UserDTO>> GetAll()
+        {
+            return mapper.Map<List<UserDTO>>(await userRepository.GetUsers());
+        }
+
+        public async Task<UserDTO> GetById(Guid id)
+        {
+            return mapper.Map<UserDTO>(await userRepository.GetUser(id));
+        }
+
+        public async Task<ValidationResult> Register(UserDTO dto)
+        {
+            var command = mapper.Map<RegisterUserCommand>(dto);
+            return await mediator.SendCommand(command);
+        }
+
+        public async Task<ValidationResult> Update(UserDTO dto)
+        {
+            var command = mapper.Map<UpdateUserCommand>(dto);
+            return await mediator.SendCommand(command);
+        }
+    }
+}
