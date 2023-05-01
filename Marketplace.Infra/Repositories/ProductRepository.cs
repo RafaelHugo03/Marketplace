@@ -11,10 +11,10 @@ namespace Marketplace.Infra.Repositories
         private readonly MarketplaceContext Db;
         private readonly DbSet<Product> DbSet;
 
-        public ProductRepository(MarketplaceContext db, DbSet<Product> dbSet)
+        public ProductRepository(MarketplaceContext context)
         {
-            Db = db;
-            DbSet = dbSet;
+            Db = context;
+            DbSet = context.Set<Product>();
         }
 
         public IUnitOfWork UnitOfWork => Db;

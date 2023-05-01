@@ -27,14 +27,15 @@ namespace Marketplace.Infra.Dependencies
 
         public static void InjectDependencies(this IServiceCollection serviceCollection)
         {
-            AddHandlers(serviceCollection);
             AddRepositories(serviceCollection);
+            AddHandlers(serviceCollection);
         }
 
         public static void AddHandlers(IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<IRequestHandler<RegisterUserCommand, ValidationResult>, UserHandler>();
             serviceCollection.AddScoped<IRequestHandler<UpdateUserCommand, ValidationResult>, UserHandler>();
+
             serviceCollection.AddScoped<IRequestHandler<RegisterProductCommand, ValidationResult>, ProductHandler>();
             serviceCollection.AddScoped<IRequestHandler<UpdateProductCommand, ValidationResult>, ProductHandler>();
         }
@@ -42,6 +43,7 @@ namespace Marketplace.Infra.Dependencies
         public static void AddRepositories(IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<IUserRepository, UserRepository>();
+            serviceCollection.AddScoped<IProductRepository, ProductRepository>();
         }
 
     }

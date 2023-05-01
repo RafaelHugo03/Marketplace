@@ -1,4 +1,4 @@
-using Marketplace.Core.Entities;
+using Marketplace.Domain.Entities;
 using Marketplace.Infra.Mappings;
 using Microsoft.EntityFrameworkCore;
 using NetDevPack.Data;
@@ -9,6 +9,7 @@ namespace Marketplace.Infra.Data
     public class MarketplaceContext : DbContext, IUnitOfWork
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Product> Products { get; set; }
 
         public MarketplaceContext(DbContextOptions<MarketplaceContext> options) 
             : base(options)
@@ -18,6 +19,7 @@ namespace Marketplace.Infra.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserMap());
+            modelBuilder.ApplyConfiguration(new ProductMap());
             modelBuilder.Ignore<Event>();
         }
 
