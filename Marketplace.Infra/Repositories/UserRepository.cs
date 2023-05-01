@@ -1,4 +1,4 @@
-using Marketplace.Core.Entities;
+using Marketplace.Domain.Entities;
 using Marketplace.Domain.Repositories;
 using Marketplace.Infra.Data;
 using Microsoft.EntityFrameworkCore;

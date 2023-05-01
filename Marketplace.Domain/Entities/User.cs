@@ -1,6 +1,6 @@
 using NetDevPack.Domain;
 
-namespace Marketplace.Core.Entities
+namespace Marketplace.Domain.Entities
 {
     public class User : Entity, IAggregateRoot
     {

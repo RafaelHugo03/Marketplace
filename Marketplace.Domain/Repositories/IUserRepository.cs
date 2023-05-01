@@ -1,4 +1,4 @@
-using Marketplace.Core.Entities;
+using Marketplace.Domain.Entities;
 using NetDevPack.Data;
 
 namespace Marketplace.Domain.Repositories

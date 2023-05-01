@@ -1,4 +1,4 @@
-using Marketplace.Core.Entities;
+using Marketplace.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

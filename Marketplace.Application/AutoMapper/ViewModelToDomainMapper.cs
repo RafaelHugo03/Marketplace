@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Marketplace.Application.Models;
-using Marketplace.Core.Entities;
+using Marketplace.Domain.Entities;
 using Marketplace.Domain.Commands.ProductCommands;
 using Marketplace.Domain.Commands.UserCommands;
 
