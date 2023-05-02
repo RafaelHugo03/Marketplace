@@ -2,6 +2,7 @@ using AutoMapper;
 using FluentValidation.Results;
 using Marketplace.Application.Models;
 using Marketplace.Application.Services.Interfaces;
+using Marketplace.Domain.Commands.ProductCommands;
 using Marketplace.Domain.Commands.UserCommands;
 using Marketplace.Domain.Repositories;
 using NetDevPack.Mediator;
@@ -45,13 +46,13 @@ namespace Marketplace.Application.Services
 
         public async Task<ValidationResult> Register(ProductDTO dto)
         {
-            var command = mapper.Map<RegisterUserCommand>(dto);
+            var command = mapper.Map<RegisterProductCommand>(dto);
             return await mediator.SendCommand(command);
         }
 
         public async Task<ValidationResult> Update(ProductDTO dto)
         {
-            var command = mapper.Map<UpdateUserCommand>(dto);
+            var command = mapper.Map<UpdateProductCommand>(dto);
             return await mediator.SendCommand(command);
         }
     }
