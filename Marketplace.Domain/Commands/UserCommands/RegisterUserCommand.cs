@@ -1,3 +1,4 @@
+using Marketplace.Domain.Entities;
 using Marketplace.Domain.Validations.CommandValidations.UserCommands;
 
 namespace Marketplace.Domain.Commands.UserCommands
@@ -20,6 +21,17 @@ namespace Marketplace.Domain.Commands.UserCommands
         {
             ValidationResult = new RegisterUserValidation().Validate(this);
             return ValidationResult.IsValid;
+        }
+
+        public User ToEntity()
+        {
+            return new(
+                Guid.NewGuid(),
+                this.Name,
+                this.EmailAddress,
+                this.Password,
+                this.BirthDate
+            );
         }
     }
 }
