@@ -1,4 +1,5 @@
 using Marketplace.Domain.Entities;
+using Marketplace.Domain.Queries;
 using Marketplace.Domain.Repositories;
 using Marketplace.Infra.Data;
 using Microsoft.EntityFrameworkCore;
@@ -43,15 +44,15 @@ namespace Marketplace.Infra.Repositories
         {
             return await DbSet
                 .AsNoTracking()
-                .Where(p => p.UserSellerId == userSellerId)
+                .Where(ProductQueries.GetBySeller(userSellerId))
                 .ToListAsync();
         }
 
-        public async Task<Product> GetById(Guid userSellerId)
+        public async Task<Product> GetById(Guid id)
         {
             return await DbSet
                 .AsNoTracking()
-                .FirstOrDefaultAsync(p => p.UserSellerId == userSellerId);
+                .FirstOrDefaultAsync(ProductQueries.GetById(id));
         }
 
         public void Update(Product product)

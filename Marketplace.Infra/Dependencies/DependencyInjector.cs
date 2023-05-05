@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation.Results;
 using Marketplace.Domain.CommandHandlers;
+using Marketplace.Domain.Commands.OrderCommands;
 using Marketplace.Domain.Commands.ProductCommands;
 using Marketplace.Domain.Commands.UserCommands;
 using Marketplace.Domain.Repositories;
@@ -35,15 +36,23 @@ namespace Marketplace.Infra.Dependencies
         {
             serviceCollection.AddScoped<IRequestHandler<RegisterUserCommand, ValidationResult>, UserHandler>();
             serviceCollection.AddScoped<IRequestHandler<UpdateUserCommand, ValidationResult>, UserHandler>();
+            serviceCollection.AddScoped<IRequestHandler<DeleteUserCommand, ValidationResult>, UserHandler>();
 
             serviceCollection.AddScoped<IRequestHandler<RegisterProductCommand, ValidationResult>, ProductHandler>();
             serviceCollection.AddScoped<IRequestHandler<UpdateProductCommand, ValidationResult>, ProductHandler>();
+            serviceCollection.AddScoped<IRequestHandler<DeleteProductCommand, ValidationResult>, ProductHandler>();
+
+            serviceCollection.AddScoped<IRequestHandler<RegisterOrderCommand, ValidationResult>, OrderHandler>();
+            serviceCollection.AddScoped<IRequestHandler<CancelOrderCommand, ValidationResult>, OrderHandler>();
+            serviceCollection.AddScoped<IRequestHandler<PayOrderCommand, ValidationResult>, OrderHandler>();
         }
 
         public static void AddRepositories(IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<IUserRepository, UserRepository>();
             serviceCollection.AddScoped<IProductRepository, ProductRepository>();
+            serviceCollection.AddScoped<IOrderRepository, OrderRepository>();
+            serviceCollection.AddScoped<IOrderItemRepository, OrderItemRepository>();
         }
 
     }
