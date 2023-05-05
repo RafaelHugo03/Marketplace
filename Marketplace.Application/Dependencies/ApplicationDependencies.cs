@@ -20,6 +20,7 @@ namespace Marketplace.Application.Dependencies
         {
             serviceCollection.AddScoped<IUserService, UserService>();
             serviceCollection.AddScoped<IProductService, ProductService>();
+            serviceCollection.AddScoped<IOrderService, OrderService>();
         }
 
         public static void AddAutoMapperConfiguration(IServiceCollection serviceCollection)
