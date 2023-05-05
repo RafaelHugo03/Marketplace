@@ -10,7 +10,8 @@ namespace Marketplace.Domain.CommandHandlers
 {
     public class UserHandler : CommandHandler,
         IRequestHandler<RegisterUserCommand, ValidationResult>,
-        IRequestHandler<UpdateUserCommand, ValidationResult>
+        IRequestHandler<UpdateUserCommand, ValidationResult>,
+        IRequestHandler<DeleteUserCommand, ValidationResult>
     {
         private readonly IUserRepository userRepository;
 
@@ -23,11 +24,7 @@ namespace Marketplace.Domain.CommandHandlers
         {
             if(!command.IsValid()) return command.ValidationResult;
 
-            var user = new User(Guid.NewGuid(),
-                command.Name,
-                command.EmailAddress,
-                command.Password,
-                command.BirthDate);
+            var user = command.ToEntity();
 
             if(await userRepository.GetUserByEmail(user.EmailAddress) != null)
             {
@@ -54,6 +51,17 @@ namespace Marketplace.Domain.CommandHandlers
             );
 
             userRepository.Update(user);
+
+            return await Commit(userRepository.UnitOfWork);
+        }
+
+        public async Task<ValidationResult> Handle(DeleteUserCommand command, CancellationToken cancellationToken)
+        {
+            if(!command.IsValid()) return command.ValidationResult;
+
+            var user = await userRepository.GetUser(command.Id);
+
+            userRepository.Delete(user);
 
             return await Commit(userRepository.UnitOfWork);
         }

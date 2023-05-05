@@ -9,7 +9,8 @@ namespace Marketplace.Domain.CommandHandlers
 {
     public class ProductHandler : CommandHandler,
         IRequestHandler<RegisterProductCommand, ValidationResult>,
-        IRequestHandler<UpdateProductCommand, ValidationResult>
+        IRequestHandler<UpdateProductCommand, ValidationResult>,
+        IRequestHandler<DeleteProductCommand, ValidationResult>
     {
         private readonly IProductRepository productRepository;
 
@@ -50,6 +51,17 @@ namespace Marketplace.Domain.CommandHandlers
             );
 
             productRepository.Update(product);
+
+            return await Commit(productRepository.UnitOfWork);
+        }
+
+        public async Task<ValidationResult> Handle(DeleteProductCommand command, CancellationToken cancellationToken)
+        {
+            if(!command.IsValid()) return command.ValidationResult;
+
+            var product = await productRepository.GetById(command.Id);
+
+            productRepository.Delete(product);
 
             return await Commit(productRepository.UnitOfWork);
         }
