@@ -10,6 +10,8 @@ namespace Marketplace.Infra.Data
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         public MarketplaceContext(DbContextOptions<MarketplaceContext> options) 
             : base(options)
@@ -20,6 +22,8 @@ namespace Marketplace.Infra.Data
         {
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new ProductMap());
+            modelBuilder.ApplyConfiguration(new OrderMap());
+            modelBuilder.ApplyConfiguration(new OrderItemMap());
             modelBuilder.Ignore<Event>();
         }
 
