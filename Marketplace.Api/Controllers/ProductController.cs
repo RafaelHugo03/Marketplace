@@ -43,10 +43,16 @@ namespace Marketplace.Api.Controllers
             return CustomResponse(await productService.Register(dto));
         }
 
-        [HttpPost("product-management/Edit")]
+        [HttpPut("product-management/edit")]
         public async Task<IActionResult> Edit([FromBody] ProductDTO dto)
         {
             return CustomResponse(await productService.Update(dto));
+        }
+
+        [HttpDelete("product-management/delete")]
+        public async Task<IActionResult> Delete([FromBody] ProductDTO dto)
+        {
+            return CustomResponse(await productService.Delete(dto));
         }
     }
 }

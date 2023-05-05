@@ -31,10 +31,16 @@ namespace Marketplace.Api.Controllers
             return CustomResponse(await userService.Register(dto));
         }
 
-        [HttpPost("user-management/edit")]
+        [HttpPut("user-management/edit")]
         public async Task<IActionResult> Edit([FromBody] UserDTO dto)
         {
             return CustomResponse(await userService.Update(dto));
+        }
+
+        [HttpDelete("user-management/delete")]
+        public async Task<IActionResult> Delete([FromBody] UserDTO dto)
+        {
+            return CustomResponse(await userService.Delete(dto));
         }
     }
 }
