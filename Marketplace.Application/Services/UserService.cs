@@ -21,6 +21,12 @@ namespace Marketplace.Application.Services
             this.mediator = mediator;
         }
 
+        public async Task<ValidationResult> Delete(UserDTO dto)
+        {
+            var command = mapper.Map<DeleteUserCommand>(dto);
+            return await mediator.SendCommand(command);
+        }
+
         public void Dispose()
         {
             GC.SuppressFinalize(this);

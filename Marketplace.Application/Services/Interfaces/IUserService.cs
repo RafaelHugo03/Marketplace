@@ -10,5 +10,6 @@ namespace Marketplace.Application.Services.Interfaces
 
         Task<ValidationResult> Register(UserDTO dto);
         Task<ValidationResult> Update(UserDTO dto);
+        Task<ValidationResult> Delete(UserDTO dto);
     }
 }

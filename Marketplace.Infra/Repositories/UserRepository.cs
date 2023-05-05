@@ -1,4 +1,5 @@
 using Marketplace.Domain.Entities;
+using Marketplace.Domain.Queries;
 using Marketplace.Domain.Repositories;
 using Marketplace.Infra.Data;
 using Microsoft.EntityFrameworkCore;
@@ -37,12 +38,12 @@ namespace Marketplace.Infra.Repositories
 
         public async Task<User> GetUser(Guid userId)
         {
-            return await DbSet.FindAsync(userId);
+            return await DbSet.FirstOrDefaultAsync(UserQueries.GetById(userId));
         }
 
         public async Task<User> GetUserByEmail(string emailAddress)
         {
-            return await DbSet.AsNoTracking().FirstOrDefaultAsync(u => u.EmailAddress == emailAddress);
+            return await DbSet.AsNoTracking().FirstOrDefaultAsync(UserQueries.GetByEmail(emailAddress));
         }
 
         public async Task<List<User>> GetUsers()
