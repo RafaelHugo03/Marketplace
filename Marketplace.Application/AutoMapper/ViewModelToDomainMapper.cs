@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Marketplace.Application.Models;
-using Marketplace.Domain.Entities;
 using Marketplace.Domain.Commands.ProductCommands;
 using Marketplace.Domain.Commands.UserCommands;
 using Marketplace.Domain.Commands.OrderCommands;
-using Marketplace.Application.Utils;
 using Marketplace.Domain.Commands.OrderItemCommands;
 
 namespace Marketplace.Application.AutoMapper
@@ -21,8 +15,14 @@ namespace Marketplace.Application.AutoMapper
                 .ConstructUsing(c => new RegisterUserCommand(
                     c.Name, 
                     c.EmailAddress,  
-                    c.Password.StringHasher(),
+                    c.Password,
                     c.BirthDate));
+
+            CreateMap<UserDTO, LoginCommand>()
+                .ConstructUsing(c => new LoginCommand(
+                    c.EmailAddress,
+                    c.Password
+                ));
 
             CreateMap<UserDTO, UpdateUserCommand>()
                 .ConstructUsing(c => new UpdateUserCommand(
@@ -62,7 +62,6 @@ namespace Marketplace.Application.AutoMapper
 
             CreateMap<OrderDTO, RegisterOrderCommand>()
                 .ConstructUsing(c => new RegisterOrderCommand(
-                    c.TotalPrice,
                     c.UserBuyerId,
                     c.OrderItems.Select(s => s.ToCommand()).ToList()
                 ));

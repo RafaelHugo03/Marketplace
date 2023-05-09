@@ -1,17 +1,18 @@
 
 using Marketplace.Domain.Commands.UserCommands;
-using Marketplace.Domain.Entities;
 using Marketplace.Domain.Repositories;
 using NetDevPack.Messaging;
 using MediatR;
 using FluentValidation.Results;
+using SecureIdentity.Password;
 
 namespace Marketplace.Domain.CommandHandlers
 {
     public class UserHandler : CommandHandler,
         IRequestHandler<RegisterUserCommand, ValidationResult>,
         IRequestHandler<UpdateUserCommand, ValidationResult>,
-        IRequestHandler<DeleteUserCommand, ValidationResult>
+        IRequestHandler<DeleteUserCommand, ValidationResult>,
+        IRequestHandler<LoginCommand, ValidationResult>
     {
         private readonly IUserRepository userRepository;
 
@@ -23,6 +24,8 @@ namespace Marketplace.Domain.CommandHandlers
         public async Task<ValidationResult> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
         {
             if(!command.IsValid()) return command.ValidationResult;
+
+            command.PasswordToHash();
 
             var user = command.ToEntity();
 
@@ -64,6 +67,29 @@ namespace Marketplace.Domain.CommandHandlers
             userRepository.Delete(user);
 
             return await Commit(userRepository.UnitOfWork);
+        }
+
+        public async Task<ValidationResult> Handle(LoginCommand command, CancellationToken cancellationToken)
+        {
+            if(!command.IsValid()) return command.ValidationResult;
+
+            var user = await userRepository.GetUserByEmail(command.EmailAddress);
+
+            if(user == null)
+            {
+                AddError("E-mail incorreto");
+                return command.ValidationResult;
+            }
+
+            var passwordIsValid = PasswordHasher.Verify(user.Password, command.Password);
+
+            if(!passwordIsValid)
+            {
+                AddError("Senha inválida");
+                return command.ValidationResult;
+            }
+            
+            return command.ValidationResult;
         }
     }
 }

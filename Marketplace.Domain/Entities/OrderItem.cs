@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using NetDevPack.Domain;
 
 namespace Marketplace.Domain.Entities

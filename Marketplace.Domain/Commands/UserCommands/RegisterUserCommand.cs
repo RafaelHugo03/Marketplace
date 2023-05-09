@@ -1,5 +1,6 @@
 using Marketplace.Domain.Entities;
 using Marketplace.Domain.Validations.CommandValidations.UserCommands;
+using SecureIdentity.Password;
 
 namespace Marketplace.Domain.Commands.UserCommands
 {
@@ -21,6 +22,11 @@ namespace Marketplace.Domain.Commands.UserCommands
         {
             ValidationResult = new RegisterUserValidation().Validate(this);
             return ValidationResult.IsValid;
+        }
+
+        public void PasswordToHash() 
+        {
+            Password = PasswordHasher.Hash(this.Password);
         }
 
         public User ToEntity()

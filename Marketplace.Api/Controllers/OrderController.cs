@@ -1,5 +1,6 @@
 using Marketplace.Application.Models;
 using Marketplace.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Api.Controllers

@@ -37,9 +37,20 @@ namespace Marketplace.Application.Services
             return mapper.Map<List<UserDTO>>(await userRepository.GetUsers());
         }
 
+        public async Task<UserDTO> GetByEmail(string emailAddress)
+        {
+            return mapper.Map<UserDTO>(await userRepository.GetUserByEmail(emailAddress));
+        }
+
         public async Task<UserDTO> GetById(Guid id)
         {
             return mapper.Map<UserDTO>(await userRepository.GetUser(id));
+        }
+
+        public async Task<ValidationResult> Login(UserDTO dto)
+        {
+            var command = mapper.Map<LoginCommand>(dto);
+            return await mediator.SendCommand(command);
         }
 
         public async Task<ValidationResult> Register(UserDTO dto)

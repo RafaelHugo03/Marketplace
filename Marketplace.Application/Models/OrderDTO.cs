@@ -7,5 +7,6 @@ namespace Marketplace.Application.Models
         public DateTime OrderDate { get; set; }
         public Guid UserBuyerId { get; set; }
         public List<OrderItemDTO> OrderItems { get; set; }
+        public UserDTO UserBuyer { get; set; }
     }
 }

@@ -168,6 +168,7 @@ namespace Marketplace.Infra.Migrations
                         .IsRequired();
 
                     b.Navigation("UserBuyer");
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("Marketplace.Domain.Entities.OrderItem", b =>

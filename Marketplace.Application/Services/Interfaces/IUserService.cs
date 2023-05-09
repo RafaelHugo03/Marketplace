@@ -7,8 +7,10 @@ namespace Marketplace.Application.Services.Interfaces
     {
         Task<List<UserDTO>> GetAll();
         Task<UserDTO> GetById(Guid id);
+        Task<UserDTO> GetByEmail(string emailAddress);
 
         Task<ValidationResult> Register(UserDTO dto);
+        Task<ValidationResult> Login(UserDTO dto);
         Task<ValidationResult> Update(UserDTO dto);
         Task<ValidationResult> Delete(UserDTO dto);
     }

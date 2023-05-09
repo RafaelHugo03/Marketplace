@@ -7,14 +7,17 @@ namespace Marketplace.Domain.Commands.OrderCommands
     public class RegisterOrderCommand : OrderCommand
     {
         public RegisterOrderCommand(
-            decimal totalPrice,
             Guid userBuyerId,
             List<RegisterOrderItemCommand> orderItems
         )
         {
-            TotalPrice = totalPrice;
             UserBuyerId = userBuyerId;
             OrderItems = orderItems;   
+        }
+
+        public void CalculateTotalPrice()
+        {
+            TotalPrice = this.OrderItems.Sum(oi => oi.Price);
         }
         public override bool IsValid()
         {
@@ -26,8 +29,7 @@ namespace Marketplace.Domain.Commands.OrderCommands
         {
             return new(Guid.NewGuid(), 
                 this.TotalPrice, 
-                this.UserBuyerId, 
-                this.OrderItems.Select(s => s.ToEntity()).ToList());
+                this.UserBuyerId);
         }
     }
 }

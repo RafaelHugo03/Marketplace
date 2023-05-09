@@ -2,12 +2,10 @@ using Marketplace.Domain.Commands.UserCommands;
 
 namespace Marketplace.Domain.Validations.CommandValidations.UserCommands
 {
-    public class RegisterUserValidation : UserCommandValidation<RegisterUserCommand>
+    public class LoginValidation : UserCommandValidation<LoginCommand>
     {
-        public RegisterUserValidation()
+        public LoginValidation()
         {
-            ValidateName();
-            ValidateBirthDate();
             ValidateEmail();
             ValidatePassword();
         }

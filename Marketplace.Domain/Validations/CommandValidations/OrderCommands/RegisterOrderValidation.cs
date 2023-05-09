@@ -8,7 +8,6 @@ namespace Marketplace.Domain.Validations.CommandValidations.OrderCommands
         {
             ValidateUserBuyerId();
             ValidateProductIds();
-            ValidateTotalPrice();
         }
     }
 }

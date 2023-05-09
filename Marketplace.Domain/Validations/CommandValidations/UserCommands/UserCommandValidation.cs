@@ -12,6 +12,12 @@ namespace Marketplace.Domain.Validations.CommandValidations.UserCommands
                 .EmailAddress();
         }
 
+        protected void ValidatePassword()
+        { 
+            RuleFor(u => u.Password)
+                .MinimumLength(8).WithMessage("Senha deve ser maior que 8 caracteres");
+        }
+
         protected void ValidateName()
         {
             RuleFor(u => u.Name)

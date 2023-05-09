@@ -25,10 +25,13 @@ namespace Marketplace.Domain.CommandHandlers
         public async Task<ValidationResult> Handle(RegisterOrderCommand command, CancellationToken cancellationToken)
         {
             if(!command.IsValid()) return command.ValidationResult;
-
+            
+            command.CalculateTotalPrice();
             var order = command.ToEntity();
 
-            order.OrderItems.ForEach(oi => 
+            var orderItems = command.OrderItems.Select(oi => oi.ToEntity()).ToList();
+
+            orderItems.ForEach(oi => 
             {
                 oi.Id = Guid.NewGuid();
                 oi.SetOrderId(order.Id);

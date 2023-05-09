@@ -1,5 +1,6 @@
 using Marketplace.Application.Models;
 using Marketplace.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marketplace.Api.Controllers
@@ -23,6 +24,22 @@ namespace Marketplace.Api.Controllers
         public async Task<IActionResult> GetById(Guid id)
         {
             return CustomResponse(await userService.GetById(id));
+        }
+
+        [HttpPost("user-management/login")]
+        public async Task<IActionResult> Login([FromBody] UserDTO dto, 
+            [FromServices] ITokenService tokenService)
+        {
+            var response = await userService.Login(dto);
+
+            if(!response.IsValid)
+                return Unauthorized(response.Errors);
+
+            var user = await userService.GetByEmail(dto.EmailAddress);
+
+            var token = tokenService.GenerateToken(user);
+
+            return Ok(token);
         }
         
         [HttpPost("user-management/create")]

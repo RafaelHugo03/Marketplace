@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Marketplace.Application.Models;
 using Marketplace.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Marketplace.Api.Controllers
 {
@@ -32,6 +27,7 @@ namespace Marketplace.Api.Controllers
         }
 
         [HttpGet("product-management/get/{id:guid}")]
+        [Authorize]
         public async Task<IActionResult> GetById(Guid id)
         {
             return CustomResponse(await productService.GetById(id));
