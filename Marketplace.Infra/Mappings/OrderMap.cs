@@ -38,8 +38,6 @@ namespace Marketplace.Infra.Mappings
             builder.HasOne(o => o.UserBuyer)
                 .WithMany()
                 .HasForeignKey(o => o.UserBuyerId);
-
-            builder.Ignore(oi => oi.OrderItems);
         }
     }
 }

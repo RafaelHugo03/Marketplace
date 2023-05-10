@@ -31,7 +31,7 @@ namespace Marketplace.Infra.Mappings
                 .HasColumnType("uuid");
 
             builder.HasOne(oi => oi.Order)
-                .WithMany()
+                .WithMany(o => o.OrderItems)
                 .HasForeignKey(oi => oi.OrderId);
 
             builder.Property(oi => oi.ProductId)
