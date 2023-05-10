@@ -37,17 +37,17 @@ namespace Marketplace.Infra.Repositories
 
         public async Task<List<Order>> GetAll()
         {
-            return await DbSet.AsNoTracking().ToListAsync();
+            return await DbSet.AsNoTracking().Include(o => o.OrderItems).ToListAsync();
         }
 
         public async Task<List<Order>> GetAllByBuyer(Guid userBuyerId)
         {
-            return await DbSet.AsNoTracking().Where(OrderQueries.GetByBuyerId(userBuyerId)).ToListAsync();
+            return await DbSet.AsNoTracking().Where(OrderQueries.GetByBuyerId(userBuyerId)).Include(o => o.OrderItems).ToListAsync();
         }
 
         public async Task<Order> GetById(Guid id)
         {
-            return await DbSet.AsNoTracking().Where(OrderQueries.GetById(id)).FirstOrDefaultAsync();
+            return await DbSet.AsNoTracking().Where(OrderQueries.GetById(id)).Include(o => o.OrderItems).FirstOrDefaultAsync();
         }
 
         public void Update(Order order)
