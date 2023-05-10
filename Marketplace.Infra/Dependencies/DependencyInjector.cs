@@ -38,6 +38,7 @@ namespace Marketplace.Infra.Dependencies
             serviceCollection.AddScoped<IRequestHandler<UpdateUserCommand, ValidationResult>, UserHandler>();
             serviceCollection.AddScoped<IRequestHandler<DeleteUserCommand, ValidationResult>, UserHandler>();
             serviceCollection.AddScoped<IRequestHandler<LoginCommand, ValidationResult>, UserHandler>();
+            serviceCollection.AddScoped<IRequestHandler<RegisterAdminCommand, ValidationResult>, UserHandler>();
 
             serviceCollection.AddScoped<IRequestHandler<RegisterProductCommand, ValidationResult>, ProductHandler>();
             serviceCollection.AddScoped<IRequestHandler<UpdateProductCommand, ValidationResult>, ProductHandler>();
