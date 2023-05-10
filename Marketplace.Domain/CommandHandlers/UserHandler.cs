@@ -12,7 +12,8 @@ namespace Marketplace.Domain.CommandHandlers
         IRequestHandler<RegisterUserCommand, ValidationResult>,
         IRequestHandler<UpdateUserCommand, ValidationResult>,
         IRequestHandler<DeleteUserCommand, ValidationResult>,
-        IRequestHandler<LoginCommand, ValidationResult>
+        IRequestHandler<LoginCommand, ValidationResult>,
+        IRequestHandler<RegisterAdminCommand, ValidationResult>
     {
         private readonly IUserRepository userRepository;
 
@@ -44,6 +45,7 @@ namespace Marketplace.Domain.CommandHandlers
         {
             if(!command.IsValid()) return command.ValidationResult;
 
+            command.PasswordToHash();
             var user = await userRepository.GetUser(command.Id);
             
             user.UpdateUser(
@@ -90,6 +92,18 @@ namespace Marketplace.Domain.CommandHandlers
             }
             
             return command.ValidationResult;
+        }
+
+        public async Task<ValidationResult> Handle(RegisterAdminCommand command, CancellationToken cancellationToken)
+        {
+            if(!command.IsValid()) return command.ValidationResult;
+
+            command.PasswordToHash();
+            var user = command.ToEntity();
+
+            userRepository.Create(user);
+
+            return await Commit(userRepository.UnitOfWork);
         }
     }
 }

@@ -18,6 +18,13 @@ namespace Marketplace.Application.AutoMapper
                     c.Password,
                     c.BirthDate));
 
+            CreateMap<UserDTO, RegisterAdminCommand>()
+                .ConstructUsing(c => new RegisterAdminCommand(
+                    c.Name, 
+                    c.EmailAddress,  
+                    c.Password,
+                    c.BirthDate));
+
             CreateMap<UserDTO, LoginCommand>()
                 .ConstructUsing(c => new LoginCommand(
                     c.EmailAddress,

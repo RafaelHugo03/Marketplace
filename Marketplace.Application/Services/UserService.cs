@@ -59,6 +59,12 @@ namespace Marketplace.Application.Services
             return await mediator.SendCommand(command);
         }
 
+        public async Task<ValidationResult> RegisterAdmin(UserDTO dto)
+        {
+            var command = mapper.Map<RegisterAdminCommand>(dto);
+            return await mediator.SendCommand(command);
+        }
+
         public async Task<ValidationResult> Update(UserDTO dto)
         {
             var command = mapper.Map<UpdateUserCommand>(dto);

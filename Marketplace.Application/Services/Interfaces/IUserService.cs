@@ -10,6 +10,7 @@ namespace Marketplace.Application.Services.Interfaces
         Task<UserDTO> GetByEmail(string emailAddress);
 
         Task<ValidationResult> Register(UserDTO dto);
+        Task<ValidationResult> RegisterAdmin(UserDTO dto);
         Task<ValidationResult> Login(UserDTO dto);
         Task<ValidationResult> Update(UserDTO dto);
         Task<ValidationResult> Delete(UserDTO dto);
