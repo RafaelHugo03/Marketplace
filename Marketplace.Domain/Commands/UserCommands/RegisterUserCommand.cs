@@ -1,4 +1,5 @@
 using Marketplace.Domain.Entities;
+using Marketplace.Domain.enums;
 using Marketplace.Domain.Validations.CommandValidations.UserCommands;
 using SecureIdentity.Password;
 
@@ -29,14 +30,15 @@ namespace Marketplace.Domain.Commands.UserCommands
             Password = PasswordHasher.Hash(this.Password);
         }
 
-        public User ToEntity()
+        public virtual User ToEntity()
         {
             return new(
                 Guid.NewGuid(),
                 this.Name,
                 this.EmailAddress,
                 this.Password,
-                this.BirthDate
+                this.BirthDate,
+                Role.User
             );
         }
     }

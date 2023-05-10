@@ -1,5 +1,6 @@
 
 using Marketplace.Domain.Validations.CommandValidations.UserCommands;
+using SecureIdentity.Password;
 
 namespace Marketplace.Domain.Commands.UserCommands
 {
@@ -17,6 +18,11 @@ namespace Marketplace.Domain.Commands.UserCommands
             EmailAddress = emailAddres;
             Password = password;
             BirthDate = BirthDate;
+        }
+
+        public void PasswordToHash() 
+        {
+            Password = PasswordHasher.Hash(this.Password);
         }
 
         public override bool IsValid()
