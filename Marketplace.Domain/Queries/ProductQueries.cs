@@ -14,5 +14,10 @@ namespace Marketplace.Domain.Queries
         {
             return p => p.UserSellerId == userSellerId;
         }
+
+        public static Expression<Func<Product, bool>> GetByIds(Guid[] ids)
+        {
+            return p => ids.Contains(p.Id);
+        }
     }
 }

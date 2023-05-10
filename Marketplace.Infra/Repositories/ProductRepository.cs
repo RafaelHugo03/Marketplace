@@ -40,6 +40,14 @@ namespace Marketplace.Infra.Repositories
             return await DbSet.AsNoTracking().ToListAsync();
         }
 
+        public async Task<List<Product>> GetAllByIds(Guid[] ids)
+        {
+            return await DbSet
+                .AsNoTracking()
+                .Where(ProductQueries.GetByIds(ids))
+                .ToListAsync();
+        }
+
         public async Task<List<Product>> GetAllByUser(Guid userSellerId)
         {
             return await DbSet

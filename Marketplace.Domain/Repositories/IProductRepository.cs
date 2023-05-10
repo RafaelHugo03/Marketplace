@@ -7,6 +7,7 @@ namespace Marketplace.Domain.Repositories
     {
         Task<List<Product>> GetAll();
         Task<List<Product>> GetAllByUser(Guid userSellerId);
+        Task<List<Product>> GetAllByIds(Guid[] ids);
         Task<Product> GetById(Guid id);
         void Create(Product product);
         void Update(Product product);
