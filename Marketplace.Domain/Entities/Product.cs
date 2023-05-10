@@ -39,5 +39,7 @@ namespace Marketplace.Domain.Entities
             Price = price;
             Quantity = quantity;
         }
+
+        public void SubtractQuantity(int quantity) => Quantity =- quantity;
     }
 }
