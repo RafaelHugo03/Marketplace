@@ -8,7 +8,7 @@ namespace Marketplace.Application.AutoMapper
     {
         public DomainToViewModelMapper()
         {
-            CreateMap<User, UserDTO>().AfterMap((src, dest) => dest.Password = "");
+            CreateMap<User, UserDTO>().AfterMap((src, dest) => dest.Password = null);
             CreateMap<Product, ProductDTO>();
             CreateMap<OrderItem, OrderItemDTO>();
             CreateMap<Order, OrderDTO>();
