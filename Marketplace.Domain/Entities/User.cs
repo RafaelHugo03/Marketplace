@@ -1,3 +1,4 @@
+using Marketplace.Domain.enums;
 using NetDevPack.Domain;
 
 namespace Marketplace.Domain.Entities
@@ -8,19 +9,22 @@ namespace Marketplace.Domain.Entities
         public string EmailAddress { get; private set; }
         public string Password { get; private set; }
         public DateTime BirthDate { get; private set; } 
+        public Role Role { get; private set; }
         public bool IsValidEmail { get; private set; } = false;
 
         public User(Guid id,
             string name, 
             string emailAddress, 
             string password, 
-            DateTime birthDate)
+            DateTime birthDate,
+            Role role)
         {
             Id = id;
             Name = name;
             EmailAddress = emailAddress;
             Password = password;
             BirthDate = birthDate;
+            Role = role;
         }
 
         public void UpdateUser(string name, 
