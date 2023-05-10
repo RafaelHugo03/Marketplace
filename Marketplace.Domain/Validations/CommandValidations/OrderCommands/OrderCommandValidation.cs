@@ -1,7 +1,6 @@
 using FluentValidation;
 using Marketplace.Domain.Commands.OrderCommands;
 using Marketplace.Domain.Commands.OrderItemCommands;
-using Marketplace.Domain.Entities;
 
 namespace Marketplace.Domain.Validations.CommandValidations.OrderCommands
 {
@@ -17,12 +16,6 @@ namespace Marketplace.Domain.Validations.CommandValidations.OrderCommands
         {
             RuleFor(o => o.UserBuyerId)
                 .NotEmpty().WithMessage("Id do comprador não pode ser nulo");
-        }
-
-        protected void ValidateTotalPrice()
-        {
-            RuleFor(o => o.TotalPrice)
-                .GreaterThan(0).WithMessage("Preço total deve ser maios que 0");
         }
 
         protected void ValidateProductIds()
