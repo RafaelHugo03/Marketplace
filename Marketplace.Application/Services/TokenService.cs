@@ -4,6 +4,7 @@ using System.Text;
 using Marketplace.Application.Models;
 using Marketplace.Application.Services.Interfaces;
 using Marketplace.Application.Settings;
+using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Marketplace.Application.Services
@@ -19,7 +20,8 @@ namespace Marketplace.Application.Services
                 Subject = new ClaimsIdentity(new []
                 {
                     new Claim(ClaimTypes.Email, user.EmailAddress),
-                    new Claim(ClaimTypes.SerialNumber, user.Id.ToString())
+                    new Claim(ClaimTypes.SerialNumber, user.Id.ToString()),
+                    new Claim(ClaimTypes.Role, user.Role.ToString())
                 }),
                 Expires = DateTime.Now.AddHours(6),
                 SigningCredentials = new SigningCredentials(
@@ -29,6 +31,16 @@ namespace Marketplace.Application.Services
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        public Guid GetIdInToken(HttpRequest request)
+        {
+            var token = request.Headers["Authorization"].ToString().Split(" ")[1];
+
+            var payload = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            
+            var id = payload.Claims.First(claim => claim.Type == "certserialnumber").Value;
+            return Guid.Parse(id);
         }
     }
 }
