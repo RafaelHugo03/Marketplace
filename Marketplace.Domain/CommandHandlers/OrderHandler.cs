@@ -14,12 +14,15 @@ namespace Marketplace.Domain.CommandHandlers
     {
         private readonly IOrderRepository orderRepository;
         private readonly IOrderItemRepository orderItemRepository;
+        private readonly IProductRepository productRepository;
 
         public OrderHandler(IOrderRepository orderRepository, 
-            IOrderItemRepository orderItemRepository)
+            IOrderItemRepository orderItemRepository,
+            IProductRepository productRepository)
         {
             this.orderRepository = orderRepository;
             this.orderItemRepository = orderItemRepository;
+            this.productRepository = productRepository;
         }
 
         public async Task<ValidationResult> Handle(RegisterOrderCommand command, CancellationToken cancellationToken)
@@ -36,6 +39,23 @@ namespace Marketplace.Domain.CommandHandlers
                 oi.Id = Guid.NewGuid();
                 oi.SetOrderId(order.Id);
             });
+
+            var productIds = orderItems.Select(s => s.ProductId).ToArray();
+            var products = await productRepository.GetAllByIds(productIds);
+
+            foreach(var id in productIds)
+            {
+                var orderItem = orderItems.Where(s => s.ProductId == id).FirstOrDefault();
+                var product = products.Where(p => p.Id == id).FirstOrDefault();
+
+                if(product.Quantity - orderItem.Quantity < 0) {
+                    AddError($"Temos apenas {product.Quantity} disponíveis do produto {product.Name}");
+                    return command.ValidationResult;
+                }
+
+                product.SubtractQuantity(orderItem.Quantity);
+                productRepository.Update(product);
+            }
 
             orderRepository.Create(order);
             orderItemRepository.CreateMultiple(order.OrderItems);
