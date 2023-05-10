@@ -8,10 +8,13 @@ namespace Marketplace.Api.Controllers
     public class AccountController : ApiController
     {
         private readonly IUserService userService;
+        private readonly ITokenService tokenService;
 
-        public AccountController(IUserService userService)
+        public AccountController(IUserService userService,
+            ITokenService tokenService)
         {
             this.userService = userService;
+            this.tokenService = tokenService;
         }
 
         [HttpGet("user-management")]
@@ -27,8 +30,7 @@ namespace Marketplace.Api.Controllers
         }
 
         [HttpPost("user-management/login")]
-        public async Task<IActionResult> Login([FromBody] UserDTO dto, 
-            [FromServices] ITokenService tokenService)
+        public async Task<IActionResult> Login([FromBody] UserDTO dto)
         {
             var response = await userService.Login(dto);
 
@@ -48,13 +50,23 @@ namespace Marketplace.Api.Controllers
             return CustomResponse(await userService.Register(dto));
         }
 
+        [HttpPost("user-management/create-admin")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> CreateAdmin([FromBody] UserDTO dto)
+        {
+            return CustomResponse(await userService.RegisterAdmin(dto));
+        }
+
         [HttpPut("user-management/edit")]
+        [Authorize]
         public async Task<IActionResult> Edit([FromBody] UserDTO dto)
         {
+            dto.Id = tokenService.GetIdInToken(Request);
             return CustomResponse(await userService.Update(dto));
         }
 
         [HttpDelete("user-management/delete")]
+        [Authorize]
         public async Task<IActionResult> Delete([FromBody] UserDTO dto)
         {
             return CustomResponse(await userService.Delete(dto));
