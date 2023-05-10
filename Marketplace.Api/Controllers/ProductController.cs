@@ -8,10 +8,13 @@ namespace Marketplace.Api.Controllers
     public class ProductController : ApiController
     {
         private readonly IProductService productService;
+        private readonly ITokenService tokenService;
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService,
+            ITokenService tokenService)
         {
             this.productService = productService;
+            this.tokenService = tokenService;
         }
 
         [HttpGet("product-management/get-all")]
@@ -34,18 +37,22 @@ namespace Marketplace.Api.Controllers
         }
 
         [HttpPost("product-management/create")]
+        [Authorize]
         public async Task<IActionResult> Create([FromBody] ProductDTO dto)
         {
+            dto.UserSellerId = tokenService.GetIdInToken(Request);
             return CustomResponse(await productService.Register(dto));
         }
 
         [HttpPut("product-management/edit")]
+        [Authorize]
         public async Task<IActionResult> Edit([FromBody] ProductDTO dto)
         {
             return CustomResponse(await productService.Update(dto));
         }
 
         [HttpDelete("product-management/delete")]
+        [Authorize]
         public async Task<IActionResult> Delete([FromBody] ProductDTO dto)
         {
             return CustomResponse(await productService.Delete(dto));
