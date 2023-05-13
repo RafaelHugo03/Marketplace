@@ -4,6 +4,7 @@ using Marketplace.Domain.Commands.ProductCommands;
 using Marketplace.Domain.Commands.UserCommands;
 using Marketplace.Domain.Commands.OrderCommands;
 using Marketplace.Domain.Commands.OrderItemCommands;
+using Marketplace.Domain.Commands.CategoryCommands;
 
 namespace Marketplace.Application.AutoMapper
 {
@@ -89,6 +90,22 @@ namespace Marketplace.Application.AutoMapper
             CreateMap<OrderDTO, PayOrderCommand>()
                 .ConstructUsing(c => new PayOrderCommand(
                     c.Id
+                ));
+
+            CreateMap<CategoryDTO, RegisterCategoryCommand>()
+                .ConstructUsing(c => new RegisterCategoryCommand(
+                    c.Name
+                ));
+
+            CreateMap<CategoryDTO, DeleteCategoryCommand>()
+                .ConstructUsing(c => new DeleteCategoryCommand(
+                    c.Id
+                ));
+
+            CreateMap<CategoryDTO, UpdateCategoryCommand>()
+                .ConstructUsing(c => new UpdateCategoryCommand(
+                    c.Id,
+                    c.Name
                 ));
         }
     }

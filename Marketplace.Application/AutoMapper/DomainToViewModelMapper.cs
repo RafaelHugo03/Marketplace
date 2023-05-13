@@ -12,6 +12,7 @@ namespace Marketplace.Application.AutoMapper
             CreateMap<Product, ProductDTO>();
             CreateMap<OrderItem, OrderItemDTO>();
             CreateMap<Order, OrderDTO>();
+            CreateMap<Category, CategoryDTO>();
         }
     }
 }

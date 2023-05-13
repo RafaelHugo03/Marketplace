@@ -27,6 +27,7 @@ namespace Marketplace.Application.Dependencies
             serviceCollection.AddScoped<IProductService, ProductService>();
             serviceCollection.AddScoped<IOrderService, OrderService>();
             serviceCollection.AddScoped<ITokenService, TokenService>();
+            serviceCollection.AddScoped<ICategoryService, CategoryService>();
         }
 
         public static void AddAuthentication(IServiceCollection serviceCollection)
