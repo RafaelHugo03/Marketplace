@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation.Results;
 using Marketplace.Domain.CommandHandlers;
+using Marketplace.Domain.Commands.CategoryCommands;
 using Marketplace.Domain.Commands.OrderCommands;
 using Marketplace.Domain.Commands.ProductCommands;
 using Marketplace.Domain.Commands.UserCommands;
@@ -47,6 +48,10 @@ namespace Marketplace.Infra.Dependencies
             serviceCollection.AddScoped<IRequestHandler<RegisterOrderCommand, ValidationResult>, OrderHandler>();
             serviceCollection.AddScoped<IRequestHandler<CancelOrderCommand, ValidationResult>, OrderHandler>();
             serviceCollection.AddScoped<IRequestHandler<PayOrderCommand, ValidationResult>, OrderHandler>();
+
+            serviceCollection.AddScoped<IRequestHandler<RegisterCategoryCommand, ValidationResult>, CategoryHandler>();
+            serviceCollection.AddScoped<IRequestHandler<UpdateCategoryCommand, ValidationResult>, CategoryHandler>();
+            serviceCollection.AddScoped<IRequestHandler<DeleteCategoryCommand, ValidationResult>, CategoryHandler>();
         }
 
         public static void AddRepositories(IServiceCollection serviceCollection)
@@ -55,6 +60,7 @@ namespace Marketplace.Infra.Dependencies
             serviceCollection.AddScoped<IProductRepository, ProductRepository>();
             serviceCollection.AddScoped<IOrderRepository, OrderRepository>();
             serviceCollection.AddScoped<IOrderItemRepository, OrderItemRepository>();
+            serviceCollection.AddScoped<ICategoryRepository, CategoryRepository>();
         }
 
     }
