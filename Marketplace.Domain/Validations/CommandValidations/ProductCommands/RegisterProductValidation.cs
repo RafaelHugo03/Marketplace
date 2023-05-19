@@ -10,6 +10,7 @@ namespace Marketplace.Domain.Validations.CommandValidations.ProductCommands
             ValidatePrice();
             ValidateQuantity();
             ValidateUserSellerId();
+            ValidateCategoryId();
         }
     }
 }

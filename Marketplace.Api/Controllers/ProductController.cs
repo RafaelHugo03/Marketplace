@@ -23,9 +23,11 @@ namespace Marketplace.Api.Controllers
             return CustomResponse(await productService.GetAll());
         }
 
-        [HttpGet("product-management/get-all/{id:guid}")]
-        public async Task<IActionResult> GetAllByUser(Guid id)
+        [HttpGet("product-management/get-all-by-user")]
+        [Authorize]
+        public async Task<IActionResult> GetAllByUser()
         {
+            var id = tokenService.GetIdInToken(Request);
             return CustomResponse(await productService.GetAllByUser(id));
         }
 

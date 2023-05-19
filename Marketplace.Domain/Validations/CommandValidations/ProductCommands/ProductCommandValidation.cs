@@ -34,5 +34,12 @@ namespace Marketplace.Domain.Validations.CommandValidations.ProductCommands
             RuleFor(p => p.Quantity)
                 .GreaterThan(0).WithMessage("Quantidade deve ser maior que 0");
         }
+
+        protected void ValidateCategoryId()
+        {
+            RuleFor(c => c.CategoryId)
+                .NotEmpty()
+                .WithMessage("Produto deve conter uma categoria");
+        }
     }
 }

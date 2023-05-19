@@ -45,6 +45,15 @@ namespace Marketplace.Infra.Mappings
             builder.HasOne(p => p.UserSeller)
                 .WithMany()
                 .HasForeignKey(p => p.UserSellerId);
+
+            builder.Property(p => p.CategoryId)
+                .IsRequired()
+                .HasColumnName("category_id")
+                .HasColumnType("uuid");
+
+            builder.HasOne(p => p.Category)
+                .WithMany()
+                .HasForeignKey(p => p.CategoryId);
         }
     }
 }

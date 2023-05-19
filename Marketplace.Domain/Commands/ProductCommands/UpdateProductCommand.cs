@@ -9,7 +9,8 @@ namespace Marketplace.Domain.Commands.ProductCommands
             string name,
             string? description,
             decimal price,
-            int quanity
+            int quanity,
+            Guid categoryId
         )
         {
             Id = id;
@@ -17,6 +18,7 @@ namespace Marketplace.Domain.Commands.ProductCommands
             Description = description;
             Price = price;
             Quantity = quanity;
+            CategoryId = categoryId;
         }
         public override bool IsValid()
         {

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Marketplace.Domain.Commands.ProductCommands;
 
 namespace Marketplace.Domain.Validations.CommandValidations.ProductCommands
@@ -14,6 +10,7 @@ namespace Marketplace.Domain.Validations.CommandValidations.ProductCommands
             ValidateName();
             ValidatePrice();
             ValidateQuantity();
+            ValidateCategoryId();
         }
     }
 }

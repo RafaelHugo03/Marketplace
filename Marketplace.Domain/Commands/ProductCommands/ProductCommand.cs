@@ -10,5 +10,6 @@ namespace Marketplace.Domain.Commands.ProductCommands
         public int Quantity { get; protected set; }
         public decimal Price { get; protected set; }
         public Guid UserSellerId { get; protected set; }
+        public Guid CategoryId { get; protected set; }
     }
 }

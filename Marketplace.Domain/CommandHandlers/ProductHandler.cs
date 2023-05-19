@@ -23,14 +23,7 @@ namespace Marketplace.Domain.CommandHandlers
         {
            if(!command.IsValid()) return command.ValidationResult;
 
-           var product = new Product(
-            Guid.NewGuid(),
-            command.Name,
-            command.Description,
-            command.Price,
-            command.Quantity,
-            command.UserSellerId
-           );
+           var product = command.ToEntity();
 
            productRepository.Create(product);
 
@@ -47,7 +40,8 @@ namespace Marketplace.Domain.CommandHandlers
                 command.Name,
                 command.Description,
                 command.Price,
-                command.Quantity
+                command.Quantity,
+                command.CategoryId
             );
 
             productRepository.Update(product);
