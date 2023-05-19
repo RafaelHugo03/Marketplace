@@ -50,7 +50,7 @@ namespace Marketplace.Infra.Repositories
 
         public void Update(Category category)
         {
-            throw new NotImplementedException();
+            DbSet.Update(category);
         }
     }
 }
