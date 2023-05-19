@@ -16,31 +16,31 @@ namespace Marketplace.Api.Controllers
             this.categoryService = categoryService;
         }
 
-        [HttpGet("/get")]
+        [HttpGet("get")]
         public async Task<IActionResult> GetAll()
         {
             return CustomResponse(await categoryService.GetAll());
         }
 
-        [HttpGet("/get/{id:Guid}")]
+        [HttpGet("get/{id:Guid}")]
         public async Task<IActionResult> GetById(Guid id)
         {
             return CustomResponse(await categoryService.GetById(id));
         }
 
-        [HttpPost("/create")]
+        [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] CategoryDTO dto)
         {
             return CustomResponse(await categoryService.Register(dto));
         }
 
-        [HttpPut("/edit")]
+        [HttpPut("edit")]
         public async Task<IActionResult> Edit([FromBody] CategoryDTO dto)
         {
             return CustomResponse(await categoryService.Update(dto));
         }
 
-        [HttpDelete("/delete")]
+        [HttpDelete("delete")]
         public async Task<IActionResult> Delete([FromBody] CategoryDTO dto)
         {
             return CustomResponse(await categoryService.Delete(dto));

@@ -28,7 +28,7 @@ namespace Marketplace.Domain.Validations.CommandValidations.UserCommands
         protected void ValidateBirthDate()
         {
             RuleFor(c => c.BirthDate)
-                .NotEmpty()
+                .Must(ValidateDate)
                 .WithMessage("Data de nascimento não pode ser vazia");
         }
 
@@ -36,6 +36,11 @@ namespace Marketplace.Domain.Validations.CommandValidations.UserCommands
         {
             RuleFor(u => u.Id)
                 .NotEmpty().WithMessage("Id não pode ser nulo");
+        }
+
+        private bool ValidateDate(DateTime date)
+        {
+            return date != null && date != DateTime.MinValue && date != DateTime.MaxValue;
         }
     }
 }

@@ -51,7 +51,8 @@ namespace Marketplace.Application.AutoMapper
                     c.Description,
                     c.Price,
                     c.Quantity,
-                    c.UserSellerId
+                    c.UserSellerId,
+                    c.CategoryId
                 ));
 
             CreateMap<ProductDTO, UpdateProductCommand>()
@@ -60,7 +61,8 @@ namespace Marketplace.Application.AutoMapper
                     c.Name,
                     c.Description,
                     c.Price,
-                    c.Quantity
+                    c.Quantity,
+                    c.CategoryId
                 ));
 
             CreateMap<ProductDTO, DeleteProductCommand>()

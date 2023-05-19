@@ -80,7 +80,7 @@ namespace Marketplace.Domain.CommandHandlers
             if(user == null)
             {
                 AddError("E-mail incorreto");
-                return command.ValidationResult;
+                return ValidationResult;
             }
 
             var passwordIsValid = PasswordHasher.Verify(user.Password, command.Password);
@@ -88,7 +88,7 @@ namespace Marketplace.Domain.CommandHandlers
             if(!passwordIsValid)
             {
                 AddError("Senha inválida");
-                return command.ValidationResult;
+                return ValidationResult;
             }
             
             return command.ValidationResult;

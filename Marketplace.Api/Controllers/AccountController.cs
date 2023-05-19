@@ -18,12 +18,14 @@ namespace Marketplace.Api.Controllers
         }
 
         [HttpGet("user-management")]
+        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             return CustomResponse(await userService.GetAll());
         }
         
         [HttpGet("user-management/{id:guid}")]
+        [Authorize]
         public async Task<IActionResult> GetById(Guid id)
         {
             return CustomResponse(await userService.GetById(id));
@@ -35,7 +37,7 @@ namespace Marketplace.Api.Controllers
             var response = await userService.Login(dto);
 
             if(!response.IsValid)
-                return Unauthorized(response.Errors);
+                return Unauthorized(response.Errors.Select(e => e.ErrorMessage));
 
             var user = await userService.GetByEmail(dto.EmailAddress);
 
